@@ -5,55 +5,158 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Average Calculator</title>
-    <link rel="stylesheet" href="assets/css/app.css">
+    <meta name="description"
+        content="This application helps users to calculate stock average prices based on entering first and second buy details">
+    <meta name="keywords"
+        content="Average calculator, stock calculator, cash calculator, Indian Stock Market, Stock market, market, Stock, price, shares, shares average, equity, shares calculator, BSE, MSE">
+    <meta name="author" content="Everlasting12">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
 </head>
 
 <body>
-    <h1>Stock Average Calculator</h1>
 
-    <div class="container">
+    <div class="section">
+        <p>Stock Average Calculator</p>
 
-        <h2>First Buy</h2>
 
-        <div class="input-fields">
-            <label for="holdingQty"> Holding Quantity : </label>
-            <input type="number" min="1" id="holdingQty">
+        <div class="inputDiv">
+            <div class="firstBuy">
+
+                <h3>First Buy:</h3>
+
+                <label for="firstunit">Unit : </label>
+                <input type="text" name="firstunit" id="firstunit" required>
+
+                <label for="firstunitprice">Price per Unit : </label>
+                <input type="text" name="firstunitprice" id="firstunitprice" required>
+
+            </div>
+            <div class="secondBuy">
+                <h3>Second Buy:</h3>
+
+                <label for="secondunit">Unit : </label>
+                <input type="text" name="secondunit" id="secondunit" required>
+
+                <label for="secondunitprice">Price per Unit : </label>
+                <input type="text" name="secondunitprice" id="secondunitprice" required>
+            </div>
+
+
+
+            <div class="buttons">
+                <button onclick="calculate()">Calculate</button>
+                <button onclick="reset()">Reset</button>
+            </div>
         </div>
 
-        <div class="input-fields">
-            <label for="holdingAvgPrice"> Holding Average Price : </label>
-            <input type="number" min="1" id="holdingAvgPrice">
+        <div id="displayOutput">
+
+            <table id="table">
+
+                <tr>
+                    <td id="label1"></td>
+                    <td class="value" id="AmountInvestedFirst"></td>
+                </tr>
+                <tr>
+                    <td id="label2"></td>
+                    <td class="value" id="AmountInvestedSecond"></td>
+                </tr>
+                <tr>
+                    <td id="label3"></td>
+                    <td class="value" id="TotalUnits"></td>
+                </tr>
+                <tr>
+                    <td id="label4" class="xl"></td>
+                    <td class="value xl" id="AveragePrice"></td>
+                </tr>
+                <tr>
+                    <td id="label5"></td>
+                    <td class="value" id="TotalAmount"></td>
+                </tr>
+
+
+            </table>
+
+
         </div>
 
-        <h2>Second Buy</h2>
 
-        <div class="input-fields">
-            <label for="newQty"> New Quantity : </label>
-            <input type="number" min="1" id="newQty">
-        </div>
 
-        <div class="input-fields">
-            <label for="newMarketPrice"> New Market Price : </label>
-            <input type="number" min="1" id="newMarketPrice">
-        </div>
-
-        <div class="result-wrapper">
-            <p>Total Quantity : <span id="totalQty" class="result-text"> 0 qty</span></p>
-            <p>Average Price : <span id="averagePrice" class="result-text"> Rs. 0</span></p>
-            <p>Total Invested Amount : <span id="totalInvestedAmount" class="result-text"> Rs. 0 </span></p>
-        </div>
-
-        <div class="button-wrapper">
-            <button onclick="calculate()" id="calculateBtn">Calculate</button>
-            <button onclick="clearAll()" id="clearBtn">Clear</button>
-        </div>
-
-        <p class="footer-label">Created by - <a href="https://www.youtube.com/channel/UCNHYZw7yuIYuJbuHG6M3pow"> Lone
-                Coder</a></p>
     </div>
 
-    <script src="assets/js/app.js"></script>
+
+
+
+    <script>
+        function calculate() {
+            const firstunit = document.querySelector('#firstunit').value;
+            const firstunitprice = document.querySelector('#firstunitprice').value;
+
+            const secondunit = document.querySelector('#secondunit').value;
+            const secondunitprice = document.querySelector('#secondunitprice').value;
+
+            if (isNaN(firstunit) || isNaN(firstunitprice) || isNaN(secondunit) || isNaN(secondunitprice)) {
+                alert("please enter a valid number!");
+            }
+            else {
+                ((firstunit < 1) || (firstunitprice < 1) || (secondunit < 1) || (secondunitprice < 1)) ? alert("value cannot be 0 or less") : calculateIt(firstunit, firstunitprice, secondunit, secondunitprice);
+
+            }
+        }
+
+        function calculateIt(firstunit, firstunitprice, secondunit, secondunitprice) {
+
+            firstunit = parseInt(firstunit);
+            firstunitprice = parseInt(firstunitprice);
+            secondunit = parseInt(secondunit);
+            secondunitprice = parseInt(secondunitprice);
+
+
+            const totalUnits = firstunit + secondunit;
+            const firstTotal = firstunit * firstunitprice;
+            const secondTotal = secondunit * secondunitprice;
+            const total = firstTotal + secondTotal;
+            const average = total / totalUnits;
+
+
+
+            document.querySelector('#label1').innerText = "Amount Invested in First Buy:";
+            document.querySelector('#label2').innerText = "Amount Invested in Second Buy:";
+            document.querySelector('#label3').innerText = "Total Units:";
+            document.querySelector('#label4').innerText = "Average Price:";
+            document.querySelector('#label5').innerText = "Total Amount Invested: ";
+
+
+
+            document.querySelector('#AmountInvestedFirst').innerText = firstTotal;
+
+            document.querySelector('#AmountInvestedSecond').innerText = secondTotal;
+
+            document.querySelector('#TotalUnits').innerText = totalUnits;
+
+            document.querySelector('#AveragePrice').innerText = average.toFixed(3);
+
+            document.querySelector('#TotalAmount').innerText = total;
+
+
+
+        };
+
+        function reset() {
+
+
+            document.querySelector('#firstunit').value = "";
+            document.querySelector('#firstunitprice').value = "";
+            document.querySelector('#secondunit').value = "";
+            document.querySelector('#secondunitprice').value = "";
+            document.querySelector('#AmountInvestedFirst').innerText = "";
+            document.querySelector('#AmountInvestedSecond').innerText = "";
+            document.querySelector('#TotalUnits').innerText = "";
+            document.querySelector('#AveragePrice').innerText = "";
+            document.querySelector('#TotalAmount').innerText = "";
+        }
+    </script>
 </body>
 
 </html>
